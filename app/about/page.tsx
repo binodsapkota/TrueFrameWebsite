@@ -15,7 +15,8 @@ const AboutPage = () => {
     <>
       <Breadcrumb
         pageName="About Page"
-        description="Empowering organizations with advanced software development and IT expertise."/>
+        description="Empowering organizations with advanced software development and IT expertise."
+      />
       <AboutSectionOne />
       <AboutSectionTwo />
     </>

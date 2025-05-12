@@ -1,6 +1,9 @@
+"use client";
+
 import { Testimonial } from "@/types/testimonial";
 import SectionTitle from "../Common/SectionTitle";
 import SingleTestimonial from "./SingleTestimonial";
+import { useTheme } from "next-themes";
 
 const testimonialData: Testimonial[] = [
   {
@@ -8,7 +11,7 @@ const testimonialData: Testimonial[] = [
     name: "Musharof Chy",
     designation: "Founder @TailGrids",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
+      "Our members are so impressed. It&apos;s intuitive. It&apos;s clean. It&apos;s distraction free. If you&apos;re building a community.",
     image: "/images/testimonials/auth-01.png",
     star: 5,
   },
@@ -17,7 +20,7 @@ const testimonialData: Testimonial[] = [
     name: "Devid Weilium",
     designation: "Founder @UIdeck",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
+      "Our members are so impressed. It&apos;s intuitive. It&apos;s clean. It&apos;s distraction free. If you&apos;re building a community.",
     image: "/images/testimonials/auth-02.png",
     star: 5,
   },
@@ -26,13 +29,16 @@ const testimonialData: Testimonial[] = [
     name: "Lethium Frenci",
     designation: "Founder @Lineicons",
     content:
-      "Our members are so impressed. It's intuitive. It's clean. It's distraction free. If you're building a community.",
+      "Our members are so impressed. It&apos;s intuitive. It&apos;s clean. It&apos;s distraction free. If you&apos;re building a community.",
     image: "/images/testimonials/auth-03.png",
     star: 5,
   },
 ];
 
 const Testimonials = () => {
+  const { theme } = useTheme();
+  const primaryColor = theme === "dark" ? "#fff" : "#4A6CF7";
+
   return (
     <section className="dark:bg-bg-color-dark bg-gray-light relative z-10 py-16 md:py-20 lg:py-28">
       <div className="container">
@@ -85,8 +91,8 @@ const Testimonials = () => {
               y2="459.865"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#4A6CF7" />
-              <stop offset="1" stopColor="#4A6CF7" stopOpacity="0" />
+              <stop stopColor={primaryColor} />
+              <stop offset="1" stopColor={primaryColor} stopOpacity="0" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_83:2"

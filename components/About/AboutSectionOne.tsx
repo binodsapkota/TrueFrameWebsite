@@ -1,3 +1,6 @@
+"use client"
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Image from "next/image";
 import SectionTitle from "../Common/SectionTitle";
 
@@ -7,15 +10,31 @@ const checkIcon = (
   </svg>
 );
 
+const List = ({ text }: { text: string }) => (
+  <p className="mb-5 flex items-center text-lg font-medium text-body-color">
+    <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
+      {checkIcon}
+    </span>
+    {text}
+  </p>
+);
+
 const AboutSectionOne = () => {
-  const List = ({ text }) => (
-    <p className="mb-5 flex items-center text-lg font-medium text-body-color">
-      <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
-        {checkIcon}
-      </span>
-      {text}
-    </p>
-  );
+  const [aboutData, setAboutData] = useState<any>(null);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/api/about")
+      .then((res) => {
+        setAboutData(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching about data:", err);
+      });
+  }, []);
+
+  const servicesLeft = aboutData?.services?.slice(0, Math.ceil(aboutData.services.length / 2)) || [];
+  const servicesRight = aboutData?.services?.slice(Math.ceil(aboutData.services.length / 2)) || [];
 
   return (
     <section id="about" className="pt-16 md:pt-20 lg:pt-28">
@@ -24,50 +43,39 @@ const AboutSectionOne = () => {
           <div className="-mx-4 flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
-                title="Alberta-Based IT Innovators"
-                paragraph="TrueFrame is an Alberta-based IT company established in 2025, dedicated to delivering innovative technology solutions for businesses of all sizes. We proudly operate in association with Riddhasoft, a leading software company in Nepal established in 2016, combining global expertise with local insight to drive digital transformation."
+                title={aboutData?.title}
+                paragraph={aboutData?.description}
                 mb="44px"
               />
-
-              <div
-                className="wow fadeInUp mb-12 max-w-[570px] lg:mb-0"
-                data-wow-delay=".15s"
-              >
+              <div className="wow fadeInUp mb-12 max-w-[570px] lg:mb-0" data-wow-delay=".15s">
                 <div className="mx-[-12px] flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="Asp.net, C#, SQL Server" />
-                    <List text="Reactjs, Nextjs" />
-                    <List text="Cloud Solutions" />
-                    <List text="AI & Machine Learning" />
-                    
+                    {servicesLeft.map((item: string, index: number) => (
+                      <List key={index} text={item} />
+                    ))}
                   </div>
-
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="IT Consulting" />
-                    <List text="Digital Strategy" />
-                    <List text="DevOps" />
-                    <List text="Mobile App Development" />
+                    {servicesRight.map((item: string, index: number) => (
+                      <List key={index} text={item} />
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="w-full px-4 lg:w-1/2">
-              <div
-                className="wow fadeInUp relative mx-auto aspect-[25/24] max-w-[500px] lg:mr-0"
-                data-wow-delay=".2s"
-              >
+              <div className="wow fadeInUp relative mx-auto aspect-[25/24] max-w-[500px] lg:mr-0" data-wow-delay=".2s">
                 <Image
                   src="/images/about/about-image.svg"
-                  alt="about-image"
+                  alt="about"
                   fill
-                  className="drop-shadow-three mx-auto max-w-full dark:hidden dark:drop-shadow-none lg:mr-0"
+                  className="drop-shadow-three mx-auto max-w-full dark:hidden lg:mr-0"
                 />
                 <Image
                   src="/images/about/about-image-dark.svg"
-                  alt="about-image"
+                  alt="about-dark"
                   fill
-                  className="drop-shadow-three mx-auto hidden max-w-full dark:block dark:drop-shadow-none lg:mr-0"
+                  className="drop-shadow-three mx-auto hidden max-w-full dark:block lg:mr-0"
                 />
               </div>
             </div>

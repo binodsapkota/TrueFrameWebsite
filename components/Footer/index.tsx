@@ -1,8 +1,12 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const Footer = () => {
+  const { theme } = useTheme();
+  const primaryColor = theme === "dark" ? "#fff" : "#4A6CF7";
+
   return (
     <>
       <footer
